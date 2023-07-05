@@ -1,0 +1,19 @@
+The LRU cache itself is a map (or dict, in Python), so the efficiency of using that (setting and getting items in the
+LRU cache) is O(1).  This was a natural choice (to use a Python dict for a cache-type data structure), as accessing a
+map is always constant time, and we want the access of our cache to be fast!
+
+The trickier part of this problem was deciding how to keep track of which item in the LRU cache was the actual LRU.
+
+My initial thinking was that the items used in the LRU cache (items set and get) could be enqueued into a queue (FIFO)
+as they are used.  Then, when I needed to find the LRU (which item to remove from the cache, in order to keep the cache
+small), I could simply dequeue the oldest item from the queue.  But, a given item in the LRU cache could be "used" multiple
+times, meaning a queue of the "used" items could be an ordered list with repeat items.
+
+Keeping an ordered set of items (items used and ordered by their most recent use) would not be O(1) in time.  I realized,
+rather than a queue, I could just keep track of the most recent use (such as a timestamp) for each item; then at any
+moment (when I needed to remove an item from the LRU cache), I could just find the item with the SMALLEST most recent time.
+
+If I had the most recent time for each item, how to find the minimum among them?  Finding a minimum among a set of
+values (or, ordering a set of values) is not O(1).  So, rather than computing the minimum, I decided to use a class
+variable to keep track of the minimum (a timestamp) across the whole cache, updating it as needed.  I am unsure this is
+100% bug-free though, although I can't find a test that will fail.
