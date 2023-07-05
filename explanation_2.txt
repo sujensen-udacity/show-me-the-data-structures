@@ -1,0 +1,9 @@
+The efficiency of my solution is O(n), where n is the total size of the input path (the number of subdirectories and
+files in those subdirectories).  Every item must be inspected once, to see if it is either a subdirectory or if it
+is ending in the given suffix.
+
+Lists are a sufficient data structure because we don't know how large it will be (how many files we will find), and we
+just need to return a list of elements.
+
+Sorting a list is expensive, so instead of doing it within the recursive function, I wait until the very end (before
+comparing the results of the function to the value in the assertion).
